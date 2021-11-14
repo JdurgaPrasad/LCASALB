@@ -17,6 +17,10 @@ Parameters:
       - t3.small
       - t3.medium
     Default: t3.micro
+  myPublicSubnet1:
+    Description: "subnet"
+    Type: string   
+    Default: subnet-9629e0f0
 Resources:
   mySimpleConfig: 
     Type: AWS::AutoScaling::LaunchConfiguration
@@ -27,3 +31,14 @@ Resources:
       - !Ref SecurityGroupID
       InstanceType:  
           Ref: "InstanceType"
+  myServerGroup:
+  Type: AWS::AutoScaling::AutoScalingGroup
+  Properties:
+    VPCZoneIdentifier:
+      - !Ref myPublicSubnet1
+    LaunchConfigurationName: !Ref mySimpleConfig
+    MinSize: '1'
+    MaxSize: '2'
+    DesiredCapacity: '2'
+    HealthCheckGracePeriod: 300
+    MaxInstanceLifetime: 2592000
