@@ -32,8 +32,8 @@ Resources:
       InstanceType:  
           Ref: "InstanceType"
   myServerGroup:
-  Type: AWS::AutoScaling::AutoScalingGroup
-  Properties:
+    Type: AWS::AutoScaling::AutoScalingGroup
+    Properties:
     VPCZoneIdentifier:
       - !Ref myPublicSubnet1
     LaunchConfigurationName: !Ref mySimpleConfig
