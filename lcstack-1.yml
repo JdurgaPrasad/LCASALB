@@ -128,7 +128,7 @@ Resources:
     Type: AWS::ElasticLoadBalancingV2::LoadBalancer
     Properties:
       Name: !Ref ALBName
-      Scheme: internal
+      Scheme: internet-facing
       Subnets:  
         - !Ref myPublicSubnet1
         - !Ref myPublicSubnet2
