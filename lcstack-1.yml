@@ -30,7 +30,7 @@ Resources:
           CpuCredits: Unlimited
         ImageId: 
           Fn::Sub: "${ImageId}"  
-      InstanceType:  
+        InstanceType:  
           Ref: "InstanceType"
   myServerGroup:
     Type: AWS::AutoScaling::AutoScalingGroup
