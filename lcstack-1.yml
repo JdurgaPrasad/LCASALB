@@ -31,7 +31,7 @@ Resources:
       - !Ref myPublicSubnet1
       LaunchTemplate:   
         LaunchTemplateId: lt-0857ccb73da20a2cb
-        Version: !Ref myLaunchTemplateVersionNumber
+        Version: !GetAtt LaunchTemplate.LatestVersionNumber
       MinSize: '1'
       MaxSize: '2'
       DesiredCapacity: '1'
