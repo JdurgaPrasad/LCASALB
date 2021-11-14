@@ -12,6 +12,10 @@ Parameters:
   InstanceType:
     Description: Amazon EC2 instance type for the instances
     Type: String
+    AllowedValues:
+      - t3.micro
+      - t3.small
+      - t3.medium
     Default: t3.micro
 Resources:
   mySimpleConfig: 
@@ -20,6 +24,6 @@ Resources:
       ImageId:
           Fn::Sub: "${ImageId}" 
       SecurityGroups:  
-          Fn::Sub: "${SecurityGroupID}" 
+      - !Ref SecurityGroupID
       InstanceType:  
-          Fn::Sub: "${InstanceType}" 
+          Ref: "InstanceType"
