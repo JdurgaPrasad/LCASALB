@@ -19,7 +19,7 @@ Parameters:
     Default: t3.micro
   myPublicSubnet1:
     Description: "subnet"
-    Type: string   
+    Type: String   
     Default: subnet-9629e0f0
 Resources:
   mySimpleConfig: 
