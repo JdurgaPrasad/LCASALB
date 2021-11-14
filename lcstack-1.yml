@@ -30,7 +30,7 @@ Resources:
           CpuCredits: Unlimited
         ImageId: 
           Fn::Sub: "${ImageId}"  
-        InstanceType: !Ref InstanceType
+        InstanceType: t3.micro
   myServerGroup:
     Type: AWS::AutoScaling::AutoScalingGroup
     Properties:
