@@ -34,11 +34,11 @@ Resources:
   myServerGroup:
     Type: AWS::AutoScaling::AutoScalingGroup
     Properties:
-    VPCZoneIdentifier:
+      VPCZoneIdentifier:
       - !Ref myPublicSubnet1
-    LaunchConfigurationName: !Ref mySimpleConfig
-    MinSize: '1'
-    MaxSize: '2'
-    DesiredCapacity: '2'
-    HealthCheckGracePeriod: 300
-    MaxInstanceLifetime: 2592000
+      LaunchConfigurationName: !Ref mySimpleConfig
+      MinSize: '1'
+      MaxSize: '2'
+      DesiredCapacity: '2'
+      HealthCheckGracePeriod: 300
+      MaxInstanceLifetime: 2592000
