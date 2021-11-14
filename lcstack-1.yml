@@ -76,6 +76,6 @@ Resources:
       DesiredCapacity: '2'
       HealthCheckGracePeriod: 300
       MaxInstanceLifetime: 2592000
-      TargetGroupARNs:[!Ref smartworksALBTargetGroup] 
+      TargetGroupARNs: [!Ref smartworksALBTargetGroup] 
     DependsOn:
       - smartworksALBTargetGroup
