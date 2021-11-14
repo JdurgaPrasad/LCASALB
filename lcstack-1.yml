@@ -17,6 +17,10 @@ Parameters:
     Type: String
     Description: "Enter the name of the Target Group"
     Default: "smartworks-alb-tg"
+  ALBName:
+    Description: Enter the name of ALB
+    Type: String
+    Default: smartworks-dev-alb
   ImageId:
     Description: "Image Id for EC2"
     Type: String
@@ -24,6 +28,10 @@ Parameters:
   SecurityGroupID:
     Description: "SGID"
     Type: AWS::EC2::SecurityGroup::Id   
+    Default: sg-0908f87618a8b122f
+  AppSecurityGroup:
+    Description: Choose the App Security group
+    Type: AWS::EC2::SecurityGroup::Id 
     Default: sg-0908f87618a8b122f
   InstanceType:
     Description: Amazon EC2 instance type for the instances
@@ -37,7 +45,35 @@ Parameters:
     Description: "subnet"
     Type: String   
     Default: subnet-9629e0f0
+  myPublicSubnet2:
+    Description: "subnet"
+    Type: String   
+    Default: subnet-1ff10857
 Resources:
+  ALBSecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: 'ALB Security Group For Smartworks'
+      #GroupName: !Ref ALBSecurityGroupName
+      VpcId: !Ref VPC
+      SecurityGroupIngress:
+      - IpProtocol: tcp
+        FromPort: 443
+        ToPort: 443
+        SourcePrefixListId: pl-0a2ec869c47a5d4b5
+      - IpProtocol: tcp
+        FromPort: 80
+        ToPort: 80
+        SourcePrefixListId: pl-0a2ec869c47a5d4b5
+  ALBSecurityGroupEgress:
+    Type: 'AWS::EC2::SecurityGroupEgress'
+    Properties:
+      GroupId: !Ref ALBSecurityGroup           # -> attaches the rule to App Security Group to Solve Circular Dependency
+      Description: To App SecurityGroup 
+      IpProtocol: tcp
+      FromPort: 80
+      ToPort: 80
+      DestinationSecurityGroupId: !Ref AppSecurityGroup
   smartworksALBTargetGroup:
     Type: "AWS::ElasticLoadBalancingV2::TargetGroup"
     Properties:
@@ -79,3 +115,28 @@ Resources:
       TargetGroupARNs: [!Ref smartworksALBTargetGroup] 
     DependsOn:
       - smartworksALBTargetGroup
+  connectionsALBListnerHTTP:
+    Type: AWS::ElasticLoadBalancingV2::Listener
+    Properties:
+      DefaultActions:
+        - Type: forward
+          TargetGroupArn: !Ref smartworksALBTargetGroup
+      LoadBalancerArn: !Ref smartworksApplicationLoadBalancer
+      Port: 80
+      Protocol: HTTP
+  smartworksApplicationLoadBalancer:
+    Type: AWS::ElasticLoadBalancingV2::LoadBalancer
+    Properties:
+      Name: !Ref ALBName
+      Scheme: internal
+      Subnets:  
+        - !Ref myPublicSubnet1
+        - !Ref myPublicSubnet2
+      SecurityGroups: 
+      - !Ref ALBSecurityGroup
+Outputs:
+  DnsName:
+    Description: DNS For Load Balancer
+    Value: !GetAtt smartworksApplicationLoadBalancer.DNSName
+    Export:
+      Name: "connections-non-prod-ALB-ENDPOINT"
