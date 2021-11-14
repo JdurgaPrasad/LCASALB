@@ -1,3 +1,42 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: 'connections LC for ASG'
+Parameters:
+  HealthCheckPath:
+    Type: String
+    Description: "Specify the Health Check Path for target Group"
+    Default: "/"
+  ALBTargetGroupPort:
+    Description: Enter the Port for ALB Target Group
+    Type: String
+    Default: 80    
+  VPC:
+    Type: AWS::EC2::VPC::Id
+    Description: "Choose the VPC where the Target group should be created"
+    Default: vpc-3b83675d
+  ALBTargetGroupName:
+    Type: String
+    Description: "Enter the name of the Target Group"
+    Default: "smartworks-alb-tg"
+  ImageId:
+    Description: "Image Id for EC2"
+    Type: String
+    Default: ami-0d4761e6d579846f9
+  SecurityGroupID:
+    Description: "SGID"
+    Type: AWS::EC2::SecurityGroup::Id   
+    Default: sg-0908f87618a8b122f
+  InstanceType:
+    Description: Amazon EC2 instance type for the instances
+    Type: String
+    AllowedValues:
+      - t3.micro
+      - t3.small
+      - t3.medium
+    Default: t3.micro
+  myPublicSubnet1:
+    Description: "subnet"
+    Type: String   
+    Default: subnet-9629e0f0
 Resources:
   smartworksALBTargetGroup:
     Type: "AWS::ElasticLoadBalancingV2::TargetGroup"
@@ -37,7 +76,6 @@ Resources:
       DesiredCapacity: '2'
       HealthCheckGracePeriod: 300
       MaxInstanceLifetime: 2592000
-      TargetGroupARNs:
-      - !Ref smartworksALBTargetGroup     
+      TargetGroupARNs:[!Ref smartworksALBTargetGroup] 
     DependsOn:
       - smartworksALBTargetGroup
