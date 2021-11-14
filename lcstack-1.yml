@@ -1,6 +1,22 @@
 AWSTemplateFormatVersion: '2010-09-09'
 Description: 'connections LC for ASG'
 Parameters:
+  HealthCheckPath:
+    Type: String
+    Description: "Specify the Health Check Path for target Group"
+    Default: "/"
+  ALBTargetGroupPort:
+    Description: Enter the Port for ALB Target Group
+    Type: String
+    Default: 80    
+  VPC:
+    Type: AWS::EC2::VPC::Id
+    Description: "Choose the VPC where the Target group should be created"
+    Default: vpc-3b83675d
+  ALBTargetGroupName:
+    Type: String
+    Description: "Enter the name of the Target Group"
+    Default: "smartworks-alb-tg"
   ImageId:
     Description: "Image Id for EC2"
     Type: String
@@ -22,6 +38,24 @@ Parameters:
     Type: String   
     Default: subnet-9629e0f0
 Resources:
+  smartworksALBTargetGroup:
+    Type: "AWS::ElasticLoadBalancingV2::TargetGroup"
+    Properties:
+      HealthCheckIntervalSeconds: 30
+      HealthCheckPath: !Ref HealthCheckPath
+      Port: !Ref ALBTargetGroupPort
+      Protocol: "HTTP"
+      HealthCheckPort: "traffic-port"
+      HealthCheckProtocol: "HTTP"
+      HealthCheckTimeoutSeconds: 5
+      UnhealthyThresholdCount: 2
+      TargetType: "instance"
+      Matcher: 
+        HttpCode: "200"
+      HealthyThresholdCount: 5
+      VpcId: !Ref VPC
+      Name: !Ref ALBTargetGroupName
+      HealthCheckEnabled: true
   mySimpleConfig: 
     Type: AWS::AutoScaling::LaunchConfiguration
     Properties:
@@ -40,5 +74,6 @@ Resources:
       MinSize: '1'
       MaxSize: '2'
       DesiredCapacity: '2'
+      TargetGroupARNs: !GetAtt smartworksALBTargetGroup      
       HealthCheckGracePeriod: 300
       MaxInstanceLifetime: 2592000
