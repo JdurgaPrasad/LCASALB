@@ -21,20 +21,24 @@ Parameters:
     Description: "subnet"
     Type: String   
     Default: subnet-9629e0f0
-  myLaunchTemplateVersionNumber:
-    Type: String  
-    Default: '3'
 Resources:
+  mySimpleConfig: 
+    Type: AWS::AutoScaling::LaunchConfiguration
+    Properties:
+      ImageId:
+          Fn::Sub: "${ImageId}" 
+      SecurityGroups:  
+      - !Ref SecurityGroupID
+      InstanceType:  
+          Ref: "InstanceType"
   myServerGroup:
     Type: AWS::AutoScaling::AutoScalingGroup
     Properties:
       VPCZoneIdentifier:
       - !Ref myPublicSubnet1
-      LaunchTemplate:   
-        LaunchTemplateId: lt-0857ccb73da20a2cb
-        Version: !Ref myLaunchTemplateVersionNumber
+      LaunchConfigurationName: !Ref mySimpleConfig
       MinSize: '1'
       MaxSize: '2'
-      DesiredCapacity: '1'
+      DesiredCapacity: '2'
       HealthCheckGracePeriod: 300
       MaxInstanceLifetime: 2592000
