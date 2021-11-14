@@ -78,3 +78,5 @@ Resources:
       - !Ref ALBTargetGroupName      
       HealthCheckGracePeriod: 300
       MaxInstanceLifetime: 2592000
+    DependsOn:
+      - smartworksALBTargetGroup
