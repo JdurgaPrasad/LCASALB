@@ -21,6 +21,8 @@ Parameters:
     Description: "subnet"
     Type: String   
     Default: subnet-9629e0f0
+  myLaunchTemplateVersionNumber:
+    Type: String  
 Resources:
   myServerGroup:
     Type: AWS::AutoScaling::AutoScalingGroup
@@ -29,6 +31,7 @@ Resources:
       - !Ref myPublicSubnet1
       LaunchTemplate:   
         LaunchTemplateId: lt-0857ccb73da20a2cb
+        Version: !Ref myLaunchTemplateVersionNumber
       MinSize: '1'
       MaxSize: '2'
       DesiredCapacity: '1'
