@@ -22,22 +22,13 @@ Parameters:
     Type: String   
     Default: subnet-9629e0f0
 Resources:
-  myLaunchTemplate:
-    Type: AWS::EC2::LaunchTemplate
-    Properties: 
-      LaunchTemplateData: 
-        CreditSpecification: 
-          CpuCredits: Unlimited
-        ImageId: 
-          Fn::Sub: "${ImageId}"  
-        InstanceType: t3.micro
   myServerGroup:
     Type: AWS::AutoScaling::AutoScalingGroup
     Properties:
       VPCZoneIdentifier:
       - !Ref myPublicSubnet1
       LaunchTemplate:   
-        LaunchTemplateId: !Ref  myLaunchTemplate
+        LaunchTemplateId: lt-0857ccb73da20a2cb
       MinSize: '1'
       MaxSize: '2'
       DesiredCapacity: '1'
