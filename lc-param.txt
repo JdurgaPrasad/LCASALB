@@ -1,0 +1,7 @@
+{
+	"Parameters": {
+		"ImageId": "ami-0d4761e6d579846f9",
+		"SecurityGroupID": "sg-0908f87618a8b122f",
+		"InstanceType": "t3.micro"
+	}
+}

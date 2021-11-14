@@ -1,0 +1,25 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: 'connections LC for ASG'
+Parameters:
+  ImageId:
+    Description: "Image Id for EC2"
+    Type: String
+    Default: ami-0d4761e6d579846f9
+  SecurityGroupID:
+    Description: "SGID"
+    Type: String   
+    Default: sg-0908f87618a8b122f
+  InstanceType:
+    Description: Amazon EC2 instance type for the instances
+    Type: String
+    Default: t3.micro
+Resources:
+  mySimpleConfig: 
+    Type: AWS::AutoScaling::LaunchConfiguration
+    Properties:
+      ImageId:
+          Fn::Sub: "${ImageId}" 
+      SecurityGroups:  
+          Fn::Sub: "${SecurityGroupID}" 
+      InstanceType:  
+          Fn::Sub: "${InstanceType}" 
