@@ -74,6 +74,6 @@ Resources:
       MinSize: '1'
       MaxSize: '2'
       DesiredCapacity: '2'
-      TargetGroupARNs: !GetAtt smartworksALBTargetGroup      
+      TargetGroupARNs: !GetAtt smartworksALBTargetGroup.Arn      
       HealthCheckGracePeriod: 300
       MaxInstanceLifetime: 2592000
