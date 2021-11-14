@@ -56,27 +56,3 @@ Resources:
       VpcId: !Ref VPC
       Name: !Ref ALBTargetGroupName
       HealthCheckEnabled: true
-  mySimpleConfig: 
-    Type: AWS::AutoScaling::LaunchConfiguration
-    Properties:
-      ImageId:
-          Fn::Sub: "${ImageId}" 
-      SecurityGroups:  
-      - !Ref SecurityGroupID
-      InstanceType:  
-          Ref: "InstanceType"
-  myServerGroup:
-    Type: AWS::AutoScaling::AutoScalingGroup
-    Properties:
-      VPCZoneIdentifier:
-      - !Ref myPublicSubnet1
-      LaunchConfigurationName: !Ref mySimpleConfig
-      MinSize: '1'
-      MaxSize: '2'
-      DesiredCapacity: '2'
-      TargetGroupARNs:
-      - !Ref smartworksALBTargetGroup      
-      HealthCheckGracePeriod: 300
-      MaxInstanceLifetime: 2592000
-    DependsOn:
-      - smartworksALBTargetGroup
