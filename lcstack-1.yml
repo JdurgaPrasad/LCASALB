@@ -49,10 +49,9 @@ Parameters:
     Description: "subnet"
     Type: String   
     Default: subnet-1ff10857
-  mySimpleConfig:
-    Description: "Luanch Teplate"
+  myLaunchTemplateVersionNumber:
+    Description: "myLaunchTemplateVersionNumber"
     Type: String   
-    Default: lt-0857ccb73da20a2cb
 Resources:
   ALBSecurityGroup:
     Type: AWS::EC2::SecurityGroup
@@ -102,9 +101,8 @@ Resources:
       VPCZoneIdentifier:
       - !Ref myPublicSubnet1
       LaunchTemplate:
-        LaunchTemplateId: 
-        - !Ref mySimpleConfig
-        Version: !GetAtt mySimpleConfig.LatestVersionNumber
+        LaunchTemplateId: lt-0857ccb73da20a2cb
+        Version: !Ref myLaunchTemplateVersionNumber
       MinSize: '1'
       MaxSize: '2'
       DesiredCapacity: '2'
