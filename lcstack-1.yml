@@ -102,8 +102,9 @@ Resources:
       VPCZoneIdentifier:
       - !Ref myPublicSubnet1
       LaunchTemplate:
-        LaunchTemplateId: lt-0857ccb73da20a2cb
-        Version: !GetAtt myLaunchTemplate.LatestVersionNumber
+        LaunchTemplateId: 
+        - !Ref mySimpleConfig
+        Version: !GetAtt mySimpleConfig.LatestVersionNumber
       MinSize: '1'
       MaxSize: '2'
       DesiredCapacity: '2'
