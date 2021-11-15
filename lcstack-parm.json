@@ -1,6 +1,7 @@
 {
 	"Parameters": {
-		"myLaunchTemplateId": "lt-0857ccb73da20a2cb",
-		"myLaunchTemplateVersionNumber": "1"
+		"ImageId": "ami-0d4761e6d579846f9",
+                "KeyName": "winsingpem",
+                "InstanceTypeCode": "t3.micro"
 	}
 }
