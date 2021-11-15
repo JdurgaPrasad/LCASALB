@@ -51,7 +51,8 @@ Parameters:
     Default: subnet-1ff10857
   myLaunchTemplateVersionNumber:
     Description: "myLaunchTemplateVersionNumber"
-    Type: String   
+    Type: String 
+    Default: 1
 Resources:
   ALBSecurityGroup:
     Type: AWS::EC2::SecurityGroup
