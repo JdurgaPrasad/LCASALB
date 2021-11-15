@@ -106,8 +106,10 @@ Resources:
       VPCZoneIdentifier:
       - !Ref myPublicSubnet1
       LaunchTemplate:
-        LaunchTemplateId: Fn::Sub: "${myLaunchTemplateId}"
-        Version: Fn::Sub: "${myLaunchTemplateVersionNumber}"
+        LaunchTemplateId: 
+          Fn::Sub: "${myLaunchTemplateId}"
+        Version: 
+          Fn::Sub: "${myLaunchTemplateVersionNumber}"
       MinSize: '1'
       MaxSize: '2'
       DesiredCapacity: '2'
