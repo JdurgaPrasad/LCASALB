@@ -49,6 +49,10 @@ Parameters:
     Description: "subnet"
     Type: String   
     Default: subnet-1ff10857
+  myLaunchTemplateId:
+    Description: "myLaunchTemplateId"
+    Type: String 
+    Default: lt-0857ccb73da20a2cb
   myLaunchTemplateVersionNumber:
     Description: "myLaunchTemplateVersionNumber"
     Type: String 
@@ -102,7 +106,7 @@ Resources:
       VPCZoneIdentifier:
       - !Ref myPublicSubnet1
       LaunchTemplate:
-        LaunchTemplateId: lt-0857ccb73da20a2cb
+        LaunchTemplateId: !Ref myLaunchTemplateId
         Version: !Ref myLaunchTemplateVersionNumber
       MinSize: '1'
       MaxSize: '2'
